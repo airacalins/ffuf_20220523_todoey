@@ -1,27 +1,30 @@
 // ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors, prefer_const_constructors_in_immutables
 
 import 'package:flutter/material.dart';
+import 'package:flutter_playground/models/task.dart';
 
 class TaskTile extends StatefulWidget {
+  final Task task;
+
+  TaskTile(this.task);
+
   @override
   State<TaskTile> createState() => _TaskTileState();
 }
 
 class _TaskTileState extends State<TaskTile> {
-  bool isChecked = false;
-
-  // void checkboxCallback
+  void toggleCheckboxState(bool checkboxState) => setState(() => widget.task.isDone = checkboxState);
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(
-        'This is a task',
-        style: TextStyle(decoration: isChecked ? TextDecoration.lineThrough : null),
+        widget.task.name,
+        style: TextStyle(decoration: widget.task.isDone ? TextDecoration.lineThrough : null),
       ),
       trailing: TaskCheckBox(
-        checkBoxState: isChecked,
-        toggleCheckboxState: (bool checkboxState) => setState(() => isChecked = checkboxState),
+        checkBoxState: widget.task.isDone,
+        toggleCheckboxState: toggleCheckboxState,
       ),
     );
   }

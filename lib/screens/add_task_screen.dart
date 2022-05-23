@@ -1,9 +1,14 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first, deprecated_member_use
 // ignore_for_file: prefer_const_constructors, sort_child_properties_last
 
 import 'package:flutter/material.dart';
 
 class AddTaskScreen extends StatelessWidget {
-  const AddTaskScreen({Key? key}) : super(key: key);
+  final Function addTaskCallback;
+
+  AddTaskScreen(this.addTaskCallback);
+
+  TextEditingController titleController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -23,12 +28,13 @@ class AddTaskScreen extends StatelessWidget {
           TextField(
             autofocus: true,
             textAlign: TextAlign.center,
+            controller: titleController,
           ),
           SizedBox(
             height: 10,
           ),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () => addTaskCallback(titleController.text),
             child: Text('Add'),
             style: ElevatedButton.styleFrom(
               primary: Theme.of(context).accentColor,
