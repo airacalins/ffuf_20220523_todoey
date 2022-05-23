@@ -2,20 +2,27 @@
 // ignore_for_file: use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
-
-import 'package:flutter_playground/models/task.dart';
 import 'package:flutter_playground/widgets/task_tile.dart';
+import 'package:provider/provider.dart';
+
+import '../models/task_data.dart';
 
 class TaskList extends StatelessWidget {
-  final List<Task> tasks;
-
-  const TaskList(this.tasks);
-
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemBuilder: (context, index) => TaskTile(tasks[index]),
-      itemCount: tasks.length,
+    return Consumer<TaskData>(
+      builder: ((context, taskData, child) {
+        final task = taskData.tasks;
+
+        return ListView.builder(
+          itemBuilder: (context, index) => TaskTile(
+            task: task[index],
+            updateTask: (checkboxState) => taskData.updateTask(task[index]),
+            deleteTask: () => taskData.deleteTask(task[index]),
+          ),
+          itemCount: taskData.taskCount,
+        );
+      }),
     );
   }
 }

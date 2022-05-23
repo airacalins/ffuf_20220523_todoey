@@ -1,34 +1,18 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sort_child_properties_last
 
 import 'package:flutter/material.dart';
-import 'package:flutter_playground/models/task.dart';
+import 'package:flutter_playground/models/task_data.dart';
 import 'package:flutter_playground/screens/add_task_screen.dart';
 import 'package:flutter_playground/widgets/task_list.dart';
+import 'package:provider/provider.dart';
 
-class TasksScreen extends StatefulWidget {
-  @override
-  State<TasksScreen> createState() => _TasksScreenState();
-}
-
-class _TasksScreenState extends State<TasksScreen> {
-  List<Task> tasks = [
-    Task('Buy milk'),
-    Task('Buy eggs'),
-    Task('Buy bread'),
-  ];
-
-  void addTaskCallback(String title) {
-    setState(() {
-      Task task = Task(title);
-      tasks.add(task);
-    });
-    Navigator.pop(context);
-  }
-
-  Widget buildBottomSheet(BuildContext context) => AddTaskScreen(addTaskCallback);
+class TasksScreen extends StatelessWidget {
+  Widget buildBottomSheet(BuildContext context) => AddTaskScreen();
 
   @override
   Widget build(BuildContext context) {
+    final taskData = Provider.of<TaskData>(context);
+
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
@@ -76,7 +60,7 @@ class _TasksScreenState extends State<TasksScreen> {
                   ),
                 ),
                 Text(
-                  '${tasks.length} tasks',
+                  '${taskData.taskCount} tasks',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18.0,
@@ -97,7 +81,7 @@ class _TasksScreenState extends State<TasksScreen> {
                   topRight: Radius.circular(20.0),
                 ),
               ),
-              child: TaskList(tasks),
+              child: TaskList(),
             ),
           )
         ],

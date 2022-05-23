@@ -2,12 +2,10 @@
 // ignore_for_file: prefer_const_constructors, sort_child_properties_last
 
 import 'package:flutter/material.dart';
+import 'package:flutter_playground/models/task_data.dart';
+import 'package:provider/provider.dart';
 
 class AddTaskScreen extends StatelessWidget {
-  final Function addTaskCallback;
-
-  AddTaskScreen(this.addTaskCallback);
-
   TextEditingController titleController = TextEditingController();
 
   @override
@@ -34,7 +32,10 @@ class AddTaskScreen extends StatelessWidget {
             height: 10,
           ),
           ElevatedButton(
-            onPressed: () => addTaskCallback(titleController.text),
+            onPressed: () {
+              Provider.of<TaskData>(context, listen: false).addTask(titleController.text);
+              Navigator.pop(context);
+            },
             child: Text('Add'),
             style: ElevatedButton.styleFrom(
               primary: Theme.of(context).accentColor,
