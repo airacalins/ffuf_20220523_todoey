@@ -16,7 +16,7 @@ class TaskTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onLongPress: () => deleteTask,
+      onLongPress: () => deleteTask(),
       title: Text(
         task.name,
         style: TextStyle(decoration: task.isDone ? TextDecoration.lineThrough : null),
